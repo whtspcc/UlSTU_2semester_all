@@ -2,12 +2,10 @@ public class LinearProbingHashTable<K, V> {
     private static class Entry<K, V> {
         K key;
         V value;
-        boolean deleted; // была ли ячейка удалена ?
 
         Entry(K key, V value) {
             this.key = key;
             this.value = value;
-            this.deleted = false;
         }
     }
 
@@ -30,8 +28,9 @@ public class LinearProbingHashTable<K, V> {
             resize();
         }
 
+        // ЛИНЕЙНОЕ ПРОБИРОВАНИЕ
         int index = hash(key);
-        while (table[index] != null && !table[index].deleted) {
+        while (table[index] != null) {
             if (table[index].key.equals(key)) {
                 table[index].value = value;
                 return;
@@ -51,7 +50,7 @@ public class LinearProbingHashTable<K, V> {
         table = new Entry[oldTable.length * 2];
         size = 0;
         for (Entry<K, V> entry : oldTable) {
-            if (entry != null && !entry.deleted) {
+            if (entry != null) {
                 put(entry.key, entry.value); // перехэширование
             }
         }

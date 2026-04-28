@@ -3,6 +3,8 @@ public class TreeChainHashTable<K extends Comparable<K>, V> {
         K key;
         V value;
         TreeNode<K, V> left, right;
+        // ссылки на детей - left -> меньше родителя, right -> больше родителя
+        // родитель - ключ !!
 
         TreeNode(K key, V value) {
             this.key = key;
@@ -17,12 +19,10 @@ public class TreeChainHashTable<K extends Comparable<K>, V> {
         buckets = new TreeNode[capacity];
     }
 
-    // превращение ключа в хэш значение
     private int getIndex(K key) {
         return Math.abs(key.hashCode()) % buckets.length;
     }
 
-    // 
     public void put(K key, V value) {
         int index = getIndex(key);
         buckets[index] = insert(buckets[index], key, value);
@@ -53,7 +53,7 @@ public class TreeChainHashTable<K extends Comparable<K>, V> {
 
     private V find(TreeNode<K, V> node, K key) {
         if (node == null) return null;
-        int cmp = key.compareTo(node.key);
+        int cmp = key.compareTo(node.key); // compareto выводит либо -NUM либо +NUM
         if (cmp < 0) return find(node.left, key);
         if (cmp > 0) return find(node.right, key);
         return node.value;

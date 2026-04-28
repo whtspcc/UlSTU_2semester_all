@@ -14,15 +14,18 @@ public class Main {
         // коллизия
         map.put("Key3", 30); 
         System.out.println("размер после 3-го элемента: " + getField(map, "size"));
+        System.out.println("\n");
 
         // проверка resize
         System.out.println("емкость до вставки 4-го: " + getTableLength(map));
         map.put("Key4", 40);
         System.out.println("емкость после вставки 4-го: " + getTableLength(map));
         System.out.println("размер итоговый: " + getField(map, "size"));
+        System.out.println("\n");
 
         // номер 2
         TreeChainHashTable<String, Integer> table = new TreeChainHashTable<>(3);
+        System.out.println("\n");
 
         // добавление 
         table.put("Apple", 100);
@@ -31,10 +34,12 @@ public class Main {
         System.out.println("Apple: " + table.get("Apple"));   // Ожидаем 100
         System.out.println("Banana: " + table.get("Banana")); // Ожидаем 200
         System.out.println("Cherry (не существует): " + table.get("Cherry")); // Ожидаем null
+        System.out.println("\n");
 
         // Обновление значения
         table.put("Apple", 500);
         System.out.println("Apple (новое значение): " + table.get("Apple")); // Ожидаем 500
+        System.out.println("\n");
 
         // коллизии
         // добавляем много элементов в маленькую таблицу (3 бакета).
@@ -53,8 +58,9 @@ public class Main {
             }
         }
         if (allFound) {
-            System.out.println("Все " + keys.length + " элементов успешно найдены в деревьях коллизий.");
+            System.out.println("Все " + keys.length + " элементов успешно найдены в деревьях");
         }
+        System.out.println("\n");
 
         // номер 3
         BloomFilter<String> filter = new BloomFilter<>(100, 10);
@@ -67,14 +73,16 @@ public class Main {
         System.out.println("Содержит Apple? " + filter.contains("Apple"));   // Ожидаем true
         System.out.println("Содержит Banana? " + filter.contains("Banana")); // Ожидаем true
         System.out.println("Содержит Orange? " + filter.contains("Orange")); // Ожидаем true
+        System.out.println("\n");
 
         // элементы, которых нет
         // Эти элементы мы не добавляли. Фильтр должен вернуть false (если нет коллизий).
         System.out.println("Содержит Grape? " + filter.contains("Grape"));   // Скорее всего false
         System.out.println("Содержит Melon? " + filter.contains("Melon"));   // Скорее всего false
+        System.out.println("\n");
 
         // демонстрация ложноположительного результата
-        /* Чтобы спровоцировать ошибку «False Positive», создадим очень маленький фильтр
+        /* чтобы спровоцировать ошибку «False Positive», создадим очень маленький фильтр
            и забьем его данными. Когда почти все биты станут 1, фильтр начнет 
            утверждать, что содержит любой элемент.
         */
@@ -87,7 +95,7 @@ public class Main {
         System.out.println("Если выше true — это ложноположительное срабатывание (коллизия битов).");
     }
 
-    // Вспомогательные методы для тестов (через Reflection, чтобы не менять ваш класс)
+    // Вспомогательные методы для тестов (через Reflection, чтобы не менять класс)
     private static Object getField(Object obj, String fieldName) {
         try {
             java.lang.reflect.Field field = obj.getClass().getDeclaredField(fieldName);
